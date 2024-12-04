@@ -5,12 +5,13 @@ This project implements a social media service using Laravel, where users can po
 
 ## Advanced Features
 ### Macros For Generate Generic Response (success, error), Generic Exception to handle Not Found Objects.
-### Gates For Simple Policy For Editing You Own Tweet and Deleting You Own Tweet,
+### Gates For Simple Policy For Editing You Own Tweet and Deleting You Own Tweet.
 ### Polymorphic Relation For Image Class, To Support Scalability
+### Resources To Wrap the Data, Control it.
 ### Service Class For Tweet Service.
 ### Cache Layer For Performance To handle Millions of Users.
 ### Notify User If Someone Followed using Mailgun service.
-### Tweet Slug To Prevent Web Scraping
+### Tweet Slug To Prevent Web Scraping.
 
 ## Postman Collection Link
 https://api.postman.com/collections/29278575-e8c14625-a5c7-4af9-b4b4-5c3211275772?access_key=PMAT-01JE9RADYQFMB5A4Q8RQPR6CPM
@@ -208,6 +209,7 @@ seprate the like, unlike end points (rest rules (each action has only end point)
                     {
                         "id": 1,
                         "text": "Nice tweet!",
+                        "user":{userData},
                         "created_at": "6 min ago"
                     }
                 ],
