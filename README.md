@@ -204,6 +204,7 @@ seprate the like, unlike end points (rest rules (each action has only end point)
                 "id": 1,
                 "text": "Hello World!",
                 "likes_count": 10,
+                "user":{userData},
                 "comments_count": 5,
                 "latest_comments": [
                     {
