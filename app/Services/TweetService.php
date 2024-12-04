@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\TweetResource;
 use App\Models\Tweet;
 use Illuminate\Http\Request;
 
@@ -18,12 +19,13 @@ class TweetService
             'body' => $request->body
         ]);
 
-        return response()->created($tweet);
+        return response()->created(TweetResource::make($tweet));
     }
 
     public function show(Tweet $tweet)
     {
-        return response()->success($tweet);
+        $tweet->load('user', 'comments.user');
+        return response()->success(TweetResource::make($tweet));
     }
 
     public function update(Request $request, Tweet $tweet)
@@ -38,7 +40,7 @@ class TweetService
             'body' => $request->body
         ]);
 
-        return response()->success($tweet);
+        return response()->success(TweetResource::make($tweet));
     }
 
 

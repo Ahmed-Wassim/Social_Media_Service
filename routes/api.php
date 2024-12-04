@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TweetsController;
 
 // Auth Routes
@@ -20,3 +21,5 @@ Route::group(
 );
 
 Route::apiResource('/tweets', TweetsController::class)->except('index');
+
+Route::post('tweets/{tweet}/comment', CommentController::class);

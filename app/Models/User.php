@@ -14,6 +14,8 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+
+    protected $with = ['image'];
     /**
      * The attributes that are mass assignable.
      *
@@ -70,11 +72,21 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     /**
      * Get the user's image.
      */
     public function image(): MorphOne
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->morphOne(Image::class, 'imageable')->select('id', 'imageable_id', 'imageable_type', 'path');
     }
 }
