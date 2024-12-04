@@ -12,6 +12,8 @@ This project implements a social media service using Laravel, where users can po
 ### Notify User If Someone Followed using Mailgun service.
 ### Tweet Slug To Prevent Web Scraping
 
+## Postman Collection Link
+https://api.postman.com/collections/29278575-e8c14625-a5c7-4af9-b4b4-5c3211275772?access_key=PMAT-01JE9RADYQFMB5A4Q8RQPR6CPM
 
 ---
 
