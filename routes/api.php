@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TweetsController;
 
 // Auth Routes
 Route::group(
@@ -17,3 +18,5 @@ Route::group(
         Route::get('/user-profile', [AuthController::class, 'userProfile'])->middleware('auth:api');
     }
 );
+
+Route::apiResource('/tweets', TweetsController::class)->except('index');
