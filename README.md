@@ -97,7 +97,7 @@ This project implements a social media service using Laravel, where users can po
     "tweet": {
         "id": 1,
         "text": "This is my first tweet!",
-        "created_at": "2024-12-04T12:00:00Z"
+        "created_at": "3 min ago"
     }
 }
 ```
@@ -161,7 +161,7 @@ seprate the like, unlike end points (rest rules (each action has only end point)
     "comment": {
         "id": 1,
         "text": "Great tweet!",
-        "created_at": "2024-12-04T12:30:00Z"
+        "created_at": "5 hours ago"
     }
 }
 ```
@@ -206,10 +206,10 @@ seprate the like, unlike end points (rest rules (each action has only end point)
                     {
                         "id": 1,
                         "text": "Nice tweet!",
-                        "created_at": "2024-12-04T13:00:00Z"
+                        "created_at": "6 min ago"
                     }
                 ],
-                "created_at": "2024-12-04T12:00:00Z"
+                "created_at": "30 min ago"
             }
         ],
         "pagination": {
