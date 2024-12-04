@@ -5,20 +5,21 @@ namespace App\Models;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tweet extends Model
 {
-    use Sluggable;
+    use Sluggable, HasFactory;
 
     protected $fillable = ['user_id', 'body'];
 
 
-    public static function booted()
-    {
-        static::creating(function (Tweet $tweet) {
-            $tweet->user_id = Auth::user()->id;
-        });
-    }
+    // public static function booted()
+    // {
+    //     static::creating(function (Tweet $tweet) {
+    //         $tweet->user_id = Auth::user()->id;
+    //     });
+    // }
 
     /**
      * Return the sluggable configuration array for this model.
@@ -47,5 +48,11 @@ class Tweet extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'like_tweets')->withTimestamps();
     }
 }

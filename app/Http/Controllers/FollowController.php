@@ -20,12 +20,18 @@ class FollowController extends Controller
             );
         }
 
-        // Attach the follower
-        $follower->followings()->attach($user);
+        try {
+            // Attach the follower
+            $follower->followings()->attach($user);
 
-        $user->notify(new FollowedNotification($follower));
+            // mailgun notification only need subscription.
 
-        return response()->success('User followed successfully.');
+            // $user->notify(new FollowedNotification($follower));
+
+            return response()->success('User followed successfully.');
+        } catch (\Exception $e) {
+            return response()->error($e->getMessage(), 500);
+        }
     }
 
     public function unfollow(User $user)
@@ -45,4 +51,6 @@ class FollowController extends Controller
 
         return response()->success('User unfollowed successfully.');
     }
+
+    // private function sendSSE() {}
 }
