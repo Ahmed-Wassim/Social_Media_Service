@@ -75,6 +75,96 @@ https://api.postman.com/collections/29278575-e8c14625-a5c7-4af9-b4b4-5c321127577
 }
 ```
 
+### 2.2 Profile API
+**Endpoint:** `GET /api/profile/{id}`  
+**Description:** Get user profile.  
+
+**Request:**
+```json
+{
+    "user": {
+        "id": 93,
+        "username": "Ms. Katelyn Veum",
+        "email": "mortimer59@example.com",
+        "followers_count": 1,
+        "followings_count": 0,
+        "image": null
+    },
+    "tweets": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 22,
+                "user_id": 93,
+                "body": "Id beatae cupiditate quas modi aut.",
+                "slug": "id-beatae-cupiditate",
+                "created_at": "2024-12-04T19:47:44.000000Z",
+                "updated_at": "2024-12-04T19:47:44.000000Z",
+                "likes_count": 0,
+                "comments": [
+                    {
+                        "id": 85,
+                        "user_id": 94,
+                        "tweet_id": 22,
+                        "body": "Non et dolor corrupti alias ea minima.",
+                        "user": {
+                            "id": 94,
+                            "username": "Rosie Doyle",
+                            "email": "acasper@example.com",
+                            "image": null
+                        }
+                    },
+                ]
+            },
+        ],
+        "first_page_url": "https://social_media_service.test/api/profile/93?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "https://social_media_service.test/api/profile/93?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://social_media_service.test/api/profile/93?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "https://social_media_service.test/api/profile/93",
+        "per_page": 8,
+        "prev_page_url": null,
+        "to": 3,
+        "total": 3
+    },
+    "followersCount": 1,
+    "followingsCount": 0
+}
+```
+
+**Validation:**
+- `email`: Required, unique, valid email format.
+- `username`: Required, no spaces allowed, using Regex.
+- `password`: Required, at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.
+- `image`: Optional, must be PNG/JPG format, max size 1MB.
+
+**Response:**
+```json
+{
+    "success": true,
+    "message": "User registered successfully."
+}
+```
+
+
 ---
 
 ## Tweet APIs
