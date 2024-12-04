@@ -1,66 +1,236 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Social Media Service API Documentation
 
-## About Laravel
+This project implements a social media service using Laravel, where users can post tweets, interact with other users' tweets, and manage their social connections.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Advanced Features
+### Macros For Generate Generic Response (success, error), Generic Exception to handle Not Found Objects.
+### Gates For Simple Policy For Editing You Own Tweet and Deleting You Own Tweet,
+### Polymorphic Relation For Image Class, To Support Scalability
+### Service Class For Tweet Service.
+### Cache Layer For Performance To handle Millions of Users.
+### Notify User If Someone Followed using Mailgun service.
+### Tweet Slug To Prevent Web Scraping
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Authentication APIs
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Login API
+**Endpoint:** `POST /api/login`  
+**Description:** Authenticates a user using their email and password.  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Request:**
+```json
+{
+    "email": "user@example.com",
+    "password": "Password123!"
+}
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Validation:**
+- `email`: Required, valid email format.
+- `password`: Required, Common Password Validation.
 
-## Laravel Sponsors
+**Response:**
+```json
+{
+    "success": true,
+    "data" : {data},
+    "token": "user_access_token"
+}
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 2. Register API
+**Endpoint:** `POST /api/register`  
+**Description:** Registers a new user.  
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+**Request:**
+```json
+{
+    "email": "user@example.com",
+    "username": "username123",
+    "password": "Password123!",
+    "image": "base64_encoded_image"
+}
+```
 
-## Contributing
+**Validation:**
+- `email`: Required, unique, valid email format.
+- `username`: Required, no spaces allowed, using Regex.
+- `password`: Required, at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character.
+- `image`: Optional, must be PNG/JPG format, max size 1MB.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Response:**
+```json
+{
+    "success": true,
+    "message": "User registered successfully."
+}
+```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Tweet APIs
 
-## Security Vulnerabilities
+### 3. Create Tweet
+**Endpoint:** `POST /api/tweets`  
+**Description:** Allows a user to create a tweet.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Request:**
+```json
+{
+    "body": "This is my first tweet!"
+}
+```
 
-## License
+**Validation:**
+- `body`: Required, maximum 140 characters.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Response:**
+```json
+{
+    "success": true,
+    "tweet": {
+        "id": 1,
+        "text": "This is my first tweet!",
+        "created_at": "2024-12-04T12:00:00Z"
+    }
+}
+```
+
+---
+
+### 4. Edit Tweet
+**Endpoint:** `PUT /api/tweets/{slug}`  
+**Description:** Allows a user to edit their own tweet.
+
+**Request:**
+```json
+{
+    "body": "This is my updated tweet!"
+}
+```
+
+**Validation:**
+- `body`: Required, maximum 140 characters.
+
+**Response:**
+```json
+{
+    "success": true,
+    "message": "Tweet updated successfully."
+}
+```
+
+---
+
+### 5. Interact with Tweet (Like/Comment)
+seprate the like, unlike end points (rest rules (each action has only end point))
+**Endpoints:**  
+- Like a Tweet: `POST /api/tweets/{slug}/like`  
+- Unlike a Tweet: `POST /api/tweets/{slug}/unlike`
+  
+- Comment on a Tweet: `POST /api/tweets/{slug}/comment`  
+
+**Request for Comment:**
+```json
+{
+    "body": "Great tweet!"
+}
+```
+
+**Validation for Comment:**
+- `body`: Required.
+
+**Response for Like:**
+```json
+{
+    "success": true,
+    "message": "Tweet liked successfully."
+}
+```
+
+**Response for Comment:**
+```json
+{
+    "success": true,
+    "comment": {
+        "id": 1,
+        "text": "Great tweet!",
+        "created_at": "2024-12-04T12:30:00Z"
+    }
+}
+```
+
+---
+
+## User Timeline APIs
+
+### 6. Follow User
+**Endpoint:** 
+- `POST /api/users/{id}/follow`
+- `POST /api/users/{id}/unfollow`
+
+**Description:** Allows a user to follow, unfollow another user.
+
+**Response:**
+```json
+{
+    "success": true,
+    "message": "You are now following this user."
+}
+```
+
+---
+
+### 7. Get Timeline
+**Endpoint:** `GET /api/timeline`  
+**Description:** Retrieves tweets from users the authenticated user follows, cached and paginated.
+
+**Response:**
+```json
+{
+    "success": true,
+    "data": {
+        "tweets": [
+            {
+                "id": 1,
+                "text": "Hello World!",
+                "likes_count": 10,
+                "comments_count": 5,
+                "latest_comments": [
+                    {
+                        "id": 1,
+                        "text": "Nice tweet!",
+                        "created_at": "2024-12-04T13:00:00Z"
+                    }
+                ],
+                "created_at": "2024-12-04T12:00:00Z"
+            }
+        ],
+        "pagination": {
+            "current_page": 1,
+            "total_pages": 5
+        }
+    }
+}
+```
+
+---
+
+## Bonus Features
+
+### 8. Email Notification on Follow
+**Description:** Sends an email notification when a user is followed using Mailgun. (free plan so didn't work).  
+
+---
+
+## Database Seeders and Factories
+
+- **User Factory**: Creates mock users with email, username, and password.
+- **Tweet Factory**: Generates tweets with text limited to 140 characters.
+
