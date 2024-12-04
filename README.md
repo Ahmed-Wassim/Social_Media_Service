@@ -98,8 +98,6 @@ https://api.postman.com/collections/29278575-e8c14625-a5c7-4af9-b4b4-5c321127577
                 "user_id": 93,
                 "body": "Id beatae cupiditate quas modi aut.",
                 "slug": "id-beatae-cupiditate",
-                "created_at": "2024-12-04T19:47:44.000000Z",
-                "updated_at": "2024-12-04T19:47:44.000000Z",
                 "likes_count": 0,
                 "comments": [
                     {
@@ -187,10 +185,30 @@ https://api.postman.com/collections/29278575-e8c14625-a5c7-4af9-b4b4-5c321127577
 ```json
 {
     "success": true,
-    "tweet": {
-        "id": 1,
-        "text": "This is my first tweet!",
-        "created_at": "3 min ago"
+    "data": {
+        "id": 20,
+        "body": "Totam ut illum dolorem est qui error.",
+        "slug": "totam-ut-illum-dolorem",
+        "created_at": "1 hour ago",
+        "user": {
+            "id": 80,
+            "username": "Dr. Anibal Ferry MD",
+            "email": "feeney.jon@example.net",
+            "image": null
+        },
+        "comments": [
+            {
+                "id": 77,
+                "user": {
+                    "id": 85,
+                    "username": "Dr. Monserrate Kulas DVM",
+                    "email": "darrion38@example.com",
+                    "image": null
+                },
+                "body": "Et non eum debitis.",
+                "created_at": "1 hour ago"
+            },
+        ]
     }
 }
 ```
@@ -251,11 +269,7 @@ seprate the like, unlike end points (rest rules (each action has only end point)
 ```json
 {
     "success": true,
-    "comment": {
-        "id": 1,
-        "text": "Great tweet!",
-        "created_at": "5 hours ago"
-    }
+    "comment": "Comment created successfully"
 }
 ```
 
